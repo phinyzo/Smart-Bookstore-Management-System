@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import {
-  Box, Typography, Card, CardContent,
-  Chip, Button, Grid
-} from "@mui/material"
+import { Box, Typography, Card, CardContent, Chip, Button, Grid } from "@mui/material"
 import { Visibility } from "@mui/icons-material"
 import OrderStatusBadge from "./OrderStatusBadge"
+import { formatKES } from "../../utils/formatPrice"
 
 const OrderCard = ({ order }) => {
   const navigate = useNavigate()
@@ -15,14 +13,10 @@ const OrderCard = ({ order }) => {
         <Grid container alignItems="center" spacing={2}>
 
           <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle2" color="text.secondary">
-              Order ID
-            </Typography>
-            <Typography fontWeight="600">
-              #{order._id.slice(-8).toUpperCase()}
-            </Typography>
+            <Typography variant="subtitle2" color="text.secondary">Order ID</Typography>
+            <Typography fontWeight="600">#{order._id.slice(-8).toUpperCase()}</Typography>
             <Typography variant="caption" color="text.secondary">
-              {new Date(order.createdAt).toLocaleDateString("en-IN", {
+              {new Date(order.createdAt).toLocaleDateString("en-KE", {
                 day: "numeric", month: "long", year: "numeric",
               })}
             </Typography>
@@ -31,7 +25,7 @@ const OrderCard = ({ order }) => {
           <Grid item xs={6} sm={2}>
             <Typography variant="subtitle2" color="text.secondary">Total</Typography>
             <Typography fontWeight="bold" color="success.main">
-              ₹{order.totalPrice}
+              {formatKES(order.totalPrice)}
             </Typography>
           </Grid>
 

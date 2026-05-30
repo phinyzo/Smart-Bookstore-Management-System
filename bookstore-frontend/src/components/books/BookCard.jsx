@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { addToCart } from "../../features/cart/cartSlice"
+import { formatKES } from "../../utils/formatPrice"
 import {
   Card, CardMedia, CardContent, CardActions,
   Typography, Button, Chip, Box, Tooltip
@@ -120,7 +121,7 @@ const BookCard = ({ book }) => {
         }}>
           <Typography variant="h6" color="success.main"
             fontWeight="800" fontSize="18px">
-            ₹{book.price}
+            {formatKES(book.price)}
           </Typography>
           <Typography variant="caption" fontWeight="500"
             color={book.stock > 0

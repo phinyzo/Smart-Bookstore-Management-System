@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { fetchAllOrders } from "../../features/orders/orderSlice"
 import { fetchBooks } from "../../features/books/bookSlice"
+import { formatKES } from "../../utils/formatPrice"
 import {
   Box, Grid, Card, CardContent, Typography,
   Button, Table, TableBody, TableCell,
@@ -79,7 +80,7 @@ const AdminDashboard = () => {
     },
     {
       label: "Revenue",
-      value: `₹${totalRevenue.toLocaleString("en-IN")}`,
+      value: formatKES(totalRevenue),
       icon: <AttachMoney />,
       color: "#27500A",
       bg: "#EAF3DE",
@@ -323,7 +324,7 @@ const AdminDashboard = () => {
                   <TableCell>
                     <Typography variant="body2" fontWeight="700"
                       color="success.main">
-                      ₹{order.totalPrice.toLocaleString("en-IN")}
+                      {formatKES(order.totalPrice)}
                     </Typography>
                   </TableCell>
 
@@ -354,7 +355,7 @@ const AdminDashboard = () => {
 
                   <TableCell>
                     <Typography variant="body2" color="text.secondary">
-                      {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                      {new Date(order.createdAt).toLocaleDateString("en-KE", {
                         day: "numeric",
                         month: "short",
                         year: "numeric",

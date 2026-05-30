@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { fetchMyOrders } from "../../features/orders/orderSlice"
+import { formatKES } from "../../utils/formatPrice"
 import {
   Box, Typography, Card, CardContent, Chip,
   Button, CircularProgress, Divider, Stack
@@ -187,7 +188,7 @@ const MyOrdersPage = () => {
                         fontSize: 16, color: "text.secondary",
                       }} />
                       <Typography variant="body2" color="text.secondary">
-                        {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                        {new Date(order.createdAt).toLocaleDateString("en-KE", {
                           day: "numeric",
                           month: "long",
                           year: "numeric",
@@ -220,7 +221,7 @@ const MyOrdersPage = () => {
                         </Typography>
                         <Typography variant="h6" fontWeight="800"
                           color="success.main">
-                          ₹{order.totalPrice}
+                          {formatKES(order.totalPrice)}
                         </Typography>
                       </Box>
                       <Button

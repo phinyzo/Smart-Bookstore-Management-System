@@ -1,20 +1,17 @@
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { selectCartTotal } from "../../features/cart/cartSlice"
-import {
-  Box, Typography, Button, Divider,
-  Card, CardContent
-} from "@mui/material"
+import { formatKES } from "../../utils/formatPrice"
+import { Box, Typography, Button, Divider, Card, CardContent } from "@mui/material"
 import { ShoppingCartCheckout, ArrowBack } from "@mui/icons-material"
 
 const CartSummary = ({ items }) => {
-  const navigate  = useNavigate()
-  const total     = useSelector(selectCartTotal)
+  const navigate = useNavigate()
+  const total    = useSelector(selectCartTotal)
 
   return (
     <Card sx={{ borderRadius: 3, position: "sticky", top: 80 }}>
       <CardContent>
-
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Order Summary
         </Typography>
@@ -25,7 +22,7 @@ const CartSummary = ({ items }) => {
               {item.title} × {item.quantity}
             </Typography>
             <Typography variant="body2">
-              ₹{item.price * item.quantity}
+              {formatKES(item.price * item.quantity)}
             </Typography>
           </Box>
         ))}
@@ -35,7 +32,7 @@ const CartSummary = ({ items }) => {
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
           <Typography variant="h6" fontWeight="bold">Total</Typography>
           <Typography variant="h6" fontWeight="bold" color="success.main">
-            ₹{total}
+            {formatKES(total)}
           </Typography>
         </Box>
 
@@ -58,7 +55,6 @@ const CartSummary = ({ items }) => {
         >
           Continue Shopping
         </Button>
-
       </CardContent>
     </Card>
   )

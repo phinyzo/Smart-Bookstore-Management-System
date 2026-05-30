@@ -22,7 +22,7 @@ exports.logEmail = async (userId, emailType, recipientEmail, status = 'Sent') =>
 // @desc    Get all email logs (admin)
 // @route   GET /api/emails
 // @access  Private/Admin
-exports.getAllEmailLogs = async (req, res) => {
+exports.getAllEmailLogs = async (req, res, next) => {
   try {
     const { page = 1, limit = 20, status } = req.query;
     const query = {};
@@ -45,14 +45,14 @@ exports.getAllEmailLogs = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in getAllEmailLogs controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching email logs' });
+    next(error);
   }
 };
 
 // @desc    Get email logs for a specific user
 // @route   GET /api/emails/user/:userId
 // @access  Private/Admin
-exports.getEmailLogsByUser = async (req, res) => {
+exports.getEmailLogsByUser = async (req, res, next) => {
   try {
     const logs = await EmailLog.find({ userId: req.params.userId })
       .sort({ sentAt: -1 });
@@ -60,6 +60,6 @@ exports.getEmailLogsByUser = async (req, res) => {
     res.status(200).json(logs);
   } catch (error) {
     console.error('Error in getEmailLogsByUser controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching user email logs' });
+    next(error);
   }
 };

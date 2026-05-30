@@ -1,25 +1,23 @@
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const generateToken = require('../utils/generateToken');
+const User           = require('../models/User');
+const bcrypt         = require('bcryptjs');
+const generateToken  = require('../utils/generateToken');
+const licenseService = require('../services/licenseService');
 
 // @desc    Register new user
 // @route   POST /api/auth/register
 // @access  Public
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   try {
     const { name, email, password, phone, address } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
+    const salt           = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user
     const user = await User.create({
       name,
       email,
@@ -29,23 +27,26 @@ exports.register = async (req, res) => {
       role: 'customer',
     });
 
+    // Auto-create 14-day trial license for new user
+    await licenseService.getOrCreateLicense(user._id);
+
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
+      _id:   user._id,
+      name:  user.name,
       email: user.email,
-      role: user.role,
+      role:  user.role,
       token: generateToken(user._id),
     });
   } catch (error) {
     console.error('Error in register controller:', error.message);
-    res.status(500).json({ message: 'Server error during registration' });
+    next(error);
   }
 };
 
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -72,14 +73,14 @@ exports.login = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in login controller:', error.message);
-    res.status(500).json({ message: 'Server error during login' });
+    next(error);
   }
 };
 
 // @desc    Get logged-in user profile
 // @route   GET /api/auth/profile
 // @access  Private
-exports.getProfile = async (req, res) => {
+exports.getProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
     if (!user) {
@@ -88,6 +89,6 @@ exports.getProfile = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error('Error in getProfile controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching profile' });
+    next(error);
   }
 };

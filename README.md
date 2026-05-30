@@ -1,318 +1,123 @@
-# 📚 Smart Bookstore Management System
+# Smart Bookstore Management System
 
-A full-stack **MERN** (MongoDB, Express.js, React.js, Node.js) e-commerce bookstore with Stripe payment integration, automated email notifications, and a comprehensive admin dashboard.
+> **Powered by PhinTech Solutions — Built in Kenya 🇰🇪**  
+> https://phintechsolutions.com
 
----
-
-## 📸 Screenshots
-
-### Register
-![Register](/Images/registerPage.png)
-
-### Login 
-![Login](/Images/loginPage.png)
-
-### Admin/Customer 
-![Users](Images/MyProfilePage.png)
-
-### Admin Dashboard
-![Admin Dashboard](Images/admin_dashboard.png)
-
-### Browse Books
-![Browse Books](/Images/admin_books_pages.png)
-
-### Books Page
-![Books Page](/Images/booksPage.png)
-
-### Admin Order Page
-![Admin Order Page](/Images/admin_ordersPage.png)
-
-### OrderId Details Page
-![orderIdDetailsPage](/Images/orderIdDetailsPage.png)
-
-### Order Success Page
-![order-successPage](/Images/order-successPage.png)
-
-### Cart Page
-![cartPage ](/Images/cartPage.png)
-
-### Checkout Payment Page
-![checkoutPaymentPage ](/Images/checkoutPaymentPage.png)
-
-### Checkout Shipping Page
-![checkoutShippingPage ](/Images/checkoutShippingPage.png)
-
-### OrderId Details Page
-![orderIdDetailsPage ](/Images/orderIdDetailsPage.png)
+A full-stack bookstore management system with M-Pesa payments, licensing, and admin management — built for the Kenyan market.
 
 ---
 
-
-## 🌐 Live Demo
-
-| Service | URL |
-|---|---|
-| 🖥️ Frontend | [bookstorefrontend-m2vv.vercel.app](https://bookstorefrontend-m2vv.vercel.app) |
-| ⚙️ Backend API | [bookstore-backend-l20s.onrender.com](https://bookstore-backend-l20s.onrender.com) |
-
-<!-- > ⚠️ Backend is hosted on Render free tier — first request may take 30–60 seconds to wake up. -->
-
----
-> [Video Link](https://drive.google.com/file/d/1YZVZvPKz94te845og_8vL668pYHWMB_O/view?usp=drive_link)
----
-
-## ✨ Features
+## Features
 
 ### Customer
-- 🔐 Register & Login with JWT authentication
-- 📖 Browse books with genre filter, search, and pagination
-- 🛒 Shopping cart with quantity management (Redux state)
-- 💳 Stripe payment gateway with test card support
-- 📦 Order tracking with real-time status updates
-- 📧 Automated order confirmation email on payment
+- Browse, search, and filter books by genre, author, title
+- Shopping cart with localStorage persistence
+- Checkout via **M-Pesa STK Push** (Lipia Online) or **Stripe card**
+- Order tracking with real-time status updates
+- Email notifications (order confirmation, status updates)
+- 14-day free trial with upgrade prompts
 
 ### Admin
-- 📊 Dashboard with stats — total books, orders, revenue, low stock
-- 📝 Full book inventory CRUD (Add / Edit / Delete)
-- 🔄 Order management with status update dropdown
-- 📋 Email log monitoring (Sent / Failed audit trail)
+- Full book inventory management (CRUD)
+- Order management with status updates
+- Revenue dashboard with KES totals
+- Email log viewer
+- License management
+
+### Licensing & Monetization
+| Plan | Price (KES) | Duration |
+|------|-------------|----------|
+| Free Trial | 0 | 14 days |
+| Monthly | 2,000 | 30 days |
+| Annual | 23,000 | 365 days |
+| Lifetime | 25,000 | Forever |
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| **Frontend** | React.js 18, Vite, Material-UI v5, Redux Toolkit |
-| **Backend** | Node.js, Express.js, MVC Architecture |
-| **Database** | MongoDB Atlas, Mongoose ODM |
-| **Auth** | JWT, bcrypt |
-| **Payment** | Stripe PaymentIntent API + Webhook |
-| **Email** | Nodemailer + Gmail SMTP |
-| **Deployment** | Vercel (frontend), Render (backend) |
-| **Forms** | React Hook Form + Yup validation |
+**Backend:** Node.js · Express 5 · MongoDB · Mongoose · JWT · Nodemailer  
+**Frontend:** React 19 · Vite 8 · Redux Toolkit · MUI v9 · React Router v7  
+**Payments:** M-Pesa via Lipia Online · Stripe (card)  
+**Deployment:** Vercel (frontend + backend) · MongoDB Atlas
 
 ---
 
-## 📁 Project Structure
+## Quick Start
 
-```
-Smart-Bookstore-Management-System/
-│
-├── bookstore-backend/
-│   ├── config/           # db.js, stripe.js, email.js
-│   ├── controllers/      # auth, book, order, payment, email
-│   ├── middleware/       # authMiddleware, adminMiddleware, errorMiddleware
-│   ├── models/           # User, Book, Order, OrderItem, Payment, EmailLog
-│   ├── routes/           # 5 route files
-│   ├── services/         # emailService.js, stripeService.js
-│   ├── utils/            # generateToken.js, validators.js
-│   └── server.js
-│
-└── bookstore-frontend/
-    ├── src/
-    │   ├── api/          # axiosInstance + 5 API files
-    │   ├── app/          # Redux store
-    │   ├── components/   # Navbar, BookCard, BookFilter, BookSearch, etc.
-    │   ├── features/     # 5 Redux slices
-    │   ├── pages/        # 12 pages (customer + admin)
-    │   └── utils/
-    ├── vercel.json
-    └── vite.config.js
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js v18+
-- MongoDB Atlas account
-- Stripe account (test mode)
-- Gmail account with App Password
-
----
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Shubhanjali801/Smart-Bookstore-Management-System.git
-cd Smart-Bookstore-Management-System
-```
-
----
-
-### 2. Backend Setup
-
+### Backend
 ```bash
 cd bookstore-backend
+cp .env.example .env
+# Fill in your env vars (see DEPLOYMENT.md)
 npm install
-```
-
-Create a `.env` file in `bookstore-backend/`:
-
-```env
-MONGO_URI=xxxxxxxxxxxxx
-JWT_SECRET=your_jwt_secret_key
-STRIPE_SECRET_KEY=cccc_51XXXXXXXXXX
-STRIPE_WEBHOOK_SECRET=xxxxxxx
-EMAIL_USER=youremail@gmail.com
-EMAIL_PASS=xxxx xxxx xxxx xxxx
-NODE_ENV=development
-PORT=5000
-```
-
-> 📌 Gmail `EMAIL_PASS` must be a **16-character App Password** — not your regular Gmail password.
-> Generate it at: Google Account → Security → 2-Step Verification → App Passwords
-
-Start backend:
-```bash
 npm run dev
 ```
 
-Backend runs at: `http://localhost:5000`
-
----
-
-### 3. Frontend Setup
-
+### Frontend
 ```bash
 cd bookstore-frontend
+cp .env.example .env
+# Fill in your env vars
 npm install
-```
-
-Create a `.env.local` file in `bookstore-frontend/`:
-
-```env
-VITE_API_URL=http://localhost:5000
-VITE_STRIPE_PUBLIC_KEY=pk_test_51XXXXXXXXXX
-```
-
-Start frontend:
-```bash
 npm run dev
 ```
 
-Frontend runs at: `http://localhost:5173`
+---
+
+## Environment Variables
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for the complete setup guide including:
+- All required environment variables
+- Vercel deployment steps
+- Lipia Online M-Pesa configuration
+- Stripe webhook setup
+- MongoDB Atlas setup
+- Security recommendations
 
 ---
 
-### 4. Stripe Webhook (Local Testing)
-
-Install Stripe CLI and run:
-```bash
-stripe listen --forward-to localhost:5000/api/payment/webhook
-```
-
-Copy the `whsec_` secret shown in terminal → paste it in your `.env` as `STRIPE_WEBHOOK_SECRET`.
-
----
-
-## 💳 Test Payment
-
-Use this Stripe test card at checkout:
-
-```
-Card Number  →  4242 4242 4242 4242
-Expiry       →  12/29  (any future date)
-CVV          →  123    (any 3 digits)
-```
-
----
-
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Access | Description |
-|---|---|---|---|
-| POST | `/api/auth/register` | Public | Register new user |
-| POST | `/api/auth/login` | Public | Login, returns JWT |
-| GET | `/api/auth/profile` | Private | Get own profile |
-| GET | `/api/books` | Public | List books (search/filter) |
+|--------|----------|--------|-------------|
+| POST | `/api/auth/register` | Public | Register user |
+| POST | `/api/auth/login` | Public | Login |
+| GET | `/api/auth/profile` | Private | Get profile |
+| GET | `/api/books` | Public | List books |
 | POST | `/api/books` | Admin | Create book |
 | PUT | `/api/books/:id` | Admin | Update book |
 | DELETE | `/api/books/:id` | Admin | Delete book |
-| POST | `/api/orders` | Private | Place order |
-| GET | `/api/orders/my` | Private | Get own orders |
-| GET | `/api/orders` | Admin | Get all orders |
-| PUT | `/api/orders/:id/status` | Admin | Update order status |
-| POST | `/api/payment/create-intent` | Private | Create Stripe PaymentIntent |
-| POST | `/api/payment/webhook` | Public | Stripe webhook handler |
-| GET | `/api/emails` | Admin | Get email logs |
+| POST | `/api/orders` | Private | Create order |
+| GET | `/api/orders/my` | Private | My orders |
+| GET | `/api/orders` | Admin | All orders |
+| PUT | `/api/orders/:id/status` | Admin | Update status |
+| POST | `/api/mpesa/pay-order` | Private | M-Pesa order payment |
+| POST | `/api/mpesa/pay-license` | Private | M-Pesa license payment |
+| GET | `/api/mpesa/status/:ref` | Private | Check payment status |
+| POST | `/api/mpesa/callback` | Public | Lipia Online webhook |
+| GET | `/api/mpesa/history` | Private | Payment history |
+| GET | `/api/license/status` | Private | License status |
+| GET | `/api/license/pricing` | Public | Pricing plans |
+| POST | `/api/payment/create-intent` | Private | Stripe intent |
+| POST | `/api/payment/webhook` | Public | Stripe webhook |
 
 ---
 
-## 👤 Admin Setup
+## Currency
 
-The `role` field defaults to `customer` on registration. To make a user admin:
-
-1. Open **MongoDB Atlas** → Browse Collections → Users
-2. Find the user → Edit → Change `role` from `"customer"` to `"admin"`
-3. Save → Login again
+All prices are in **KES (Kenyan Shillings)**.  
+M-Pesa payments via **Lipia Online** — Till Number: PHINTECHSOLUTIONS  
+Payment link: https://lipia-online.vercel.app/link/PHINTECHSOLUTIONS
 
 ---
 
-## ☁️ Deployment
+## License
 
-### Backend → Render
-
-| Setting | Value |
-|---|---|
-| Build Command | `npm install` |
-| Start Command | `node server.js` |
-| Region | Singapore |
-| Auto-deploy | On push to `main` |
-
-Add all `.env` variables in Render → Environment tab.
-
-### Frontend → Vercel
-
-| Setting | Value |
-|---|---|
-| Framework | Vite |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
-| Root Directory | `bookstore-frontend` |
-
-Add `VITE_API_URL` and `VITE_STRIPE_PUBLIC_KEY` in Vercel → Settings → Environment Variables.
-
-> After adding env variables on Vercel — **always redeploy** for changes to take effect.
+This project is proprietary software.  
+Developed and maintained by **PhinTech Solutions**.
 
 ---
 
-## 🔄 CI/CD
-
-Every push to `main` branch triggers automatic redeploy on both **Vercel** and **Render**.
-
-```bash
-# Update backend
-cd bookstore-backend
-git add .
-git commit -m "your message"
-git push   # → Render auto-redeploys
-
-# Update frontend
-cd bookstore-frontend
-git add .
-git commit -m "your message"
-git push   # → Vercel auto-redeploys
-```
-
----
-
-## 📄 License
-
-This project was developed as part of the **Month 2 internship assignment** at [The Skybrisk](https://theskybrisk.com).
-
----
-
-## 👩‍💻 Author
-
-**Shubhanjali**
-B.Tech Information Technology — IIIT Allahabad
-[GitHub](https://github.com/Shubhanjali801)
-
----
-
-<div align="center">
-  Made with ❤️ using MongoDB · Express.js · React.js · Node.js
-</div>
+*Powered by PhinTech Solutions — Built in Kenya 🇰🇪*  
+*https://phintechsolutions.com*

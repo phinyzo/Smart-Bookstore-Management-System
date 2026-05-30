@@ -3,7 +3,7 @@ const Book = require('../models/Book');
 // @desc    Get all books with search & filter
 // @route   GET /api/books
 // @access  Public
-exports.getAllBooks = async (req, res) => {
+exports.getAllBooks = async (req, res, next) => {
   try {
     const { search, genre, author, page = 1, limit = 10 } = req.query;
 
@@ -30,14 +30,14 @@ exports.getAllBooks = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in getAllBooks controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching books' });
+    next(error);
   }
 };
 
 // @desc    Get single book by ID
 // @route   GET /api/books/:id
 // @access  Public
-exports.getBookById = async (req, res) => {
+exports.getBookById = async (req, res, next) => {
   try {
     const book = await Book.findById(req.params.id);
     if (!book) {
@@ -46,14 +46,14 @@ exports.getBookById = async (req, res) => {
     res.status(200).json(book);
   } catch (error) {
     console.error('Error in getBookById controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching book' });
+    next(error);
   }
 };
 
 // @desc    Create new book
 // @route   POST /api/books
 // @access  Private/Admin
-exports.createBook = async (req, res) => {
+exports.createBook = async (req, res, next) => {
   try {
     const { title, author, genre, price, stock, isbn, description, imageUrl } = req.body;
 
@@ -71,14 +71,14 @@ exports.createBook = async (req, res) => {
     res.status(201).json(book);
   } catch (error) {
     console.error('Error in createBook controller:', error.message);
-    res.status(500).json({ message: 'Server error creating book' });
+    next(error);
   }
 };
 
 // @desc    Update book
 // @route   PUT /api/books/:id
 // @access  Private/Admin
-exports.updateBook = async (req, res) => {
+exports.updateBook = async (req, res, next) => {
   try {
     const book = await Book.findById(req.params.id);
     if (!book) {
@@ -94,14 +94,14 @@ exports.updateBook = async (req, res) => {
     res.status(200).json(updatedBook);
   } catch (error) {
     console.error('Error in updateBook controller:', error.message);
-    res.status(500).json({ message: 'Server error updating book' });
+    next(error);
   }
 };
 
 // @desc    Delete book
 // @route   DELETE /api/books/:id
 // @access  Private/Admin
-exports.deleteBook = async (req, res) => {
+exports.deleteBook = async (req, res, next) => {
   try {
     const book = await Book.findById(req.params.id);
     if (!book) {
@@ -112,6 +112,6 @@ exports.deleteBook = async (req, res) => {
     res.status(200).json({ message: 'Book deleted successfully' });
   } catch (error) {
     console.error('Error in deleteBook controller:', error.message);
-    res.status(500).json({ message: 'Server error deleting book' });
+    next(error);
   }
 };

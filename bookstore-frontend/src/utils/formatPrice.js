@@ -1,11 +1,19 @@
 /**
- * Formats a number as Indian Rupee currency string.
- * e.g. 1500 → "₹1,500"
+ * Format a number as KES currency
+ * Examples:
+ *   formatKES(2000)   → "KES 2,000"
+ *   formatKES(25000)  → "KES 25,000"
+ *   formatKES(1500.5) → "KES 1,501"
  */
-export const formatPrice = (amount) => {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    minimumFractionDigits: 0,
-  }).format(amount)
+export const formatKES = (amount) => {
+  const rounded = Math.round(Number(amount))
+  return `KES ${rounded.toLocaleString("en-KE")}`
 }
+
+/**
+ * Format as plain number with commas (no currency prefix)
+ * Examples:
+ *   formatNumber(25000) → "25,000"
+ */
+export const formatNumber = (amount) =>
+  Math.round(Number(amount)).toLocaleString("en-KE")

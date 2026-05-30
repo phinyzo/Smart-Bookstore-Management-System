@@ -1,16 +1,16 @@
-
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
 const {
   createPaymentIntent,
-  stripeWebhook,
   getPaymentByOrder,
 } = require('../controllers/paymentController');
 const protect = require('../middleware/authMiddleware');
 
-router.post('/webhook',express.raw({ type: 'application/json' }),stripeWebhook);
+// NOTE: The /webhook route is registered directly in server.js
+// with express.raw() BEFORE express.json() — do NOT add it here.
+
 // Protected routes
-router.post('/create-intent',       protect, createPaymentIntent);
-router.get('/order/:orderId',       protect, getPaymentByOrder);
+router.post('/create-intent',   protect, createPaymentIntent);
+router.get('/order/:orderId',   protect, getPaymentByOrder);
 
 module.exports = router;

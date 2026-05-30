@@ -1,6 +1,6 @@
 const stripe = require('../config/stripe');
 
-const createPaymentIntent = async (amount, currency = 'inr') => {
+const createPaymentIntent = async (amount, currency = 'kes') => {
   return await stripe.paymentIntents.create({
     amount: amount * 100,
     currency,

@@ -1,10 +1,7 @@
 import { useDispatch } from "react-redux"
-import {
-  removeFromCart, updateQuantity
-} from "../../features/cart/cartSlice"
-import {
-  Box, Typography, IconButton, Card, CardContent
-} from "@mui/material"
+import { removeFromCart, updateQuantity } from "../../features/cart/cartSlice"
+import { formatKES } from "../../utils/formatPrice"
+import { Box, Typography, IconButton, Card, CardContent } from "@mui/material"
 import { Add, Remove, Delete } from "@mui/icons-material"
 
 const CartItem = ({ item }) => {
@@ -42,7 +39,7 @@ const CartItem = ({ item }) => {
               {item.author}
             </Typography>
             <Typography variant="body2" color="primary.main" fontWeight="500">
-              ₹{item.price} each
+              {formatKES(item.price)} each
             </Typography>
           </Box>
 
@@ -61,7 +58,7 @@ const CartItem = ({ item }) => {
             </Box>
 
             <Typography variant="h6" color="success.main" fontWeight="bold">
-              ₹{item.price * item.quantity}
+              {formatKES(item.price * item.quantity)}
             </Typography>
 
             <IconButton color="error" size="medium" onClick={handleRemove}>

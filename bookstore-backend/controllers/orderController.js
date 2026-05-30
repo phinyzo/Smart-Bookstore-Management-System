@@ -7,7 +7,7 @@ const { sendOrderStatusUpdate } = require("../services/emailService")
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
-exports.createOrder = async (req, res) => {
+exports.createOrder = async (req, res, next) => {
   try {
     const { items, shippingAddress } = req.body;
 
@@ -60,14 +60,14 @@ exports.createOrder = async (req, res) => {
     res.status(201).json({ order, orderItems });
   } catch (error) {
     console.error('Error in createOrder controller:', error.message);
-    res.status(500).json({ message: 'Server error creating order' });
+    next(error);
   }
 };
 
 // @desc    Get logged-in user orders
 // @route   GET /api/orders/my
 // @access  Private
-exports.getMyOrders = async (req, res) => {
+exports.getMyOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({ userId: req.user._id })
       .sort({ createdAt: -1 });
@@ -83,14 +83,14 @@ exports.getMyOrders = async (req, res) => {
     res.status(200).json(ordersWithItems);
   } catch (error) {
     console.error('Error in getMyOrders controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching orders' });
+    next(error);
   }
 };
 
 // @desc    Get single order by ID
 // @route   GET /api/orders/:id
 // @access  Private
-exports.getOrderById = async (req, res) => {
+exports.getOrderById = async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id)
       .populate('userId', 'name email');
@@ -111,14 +111,14 @@ exports.getOrderById = async (req, res) => {
     res.status(200).json({ order, items });
   } catch (error) {
     console.error('Error in getOrderById controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching order' });
+    next(error);
   }
 };
 
 // @desc    Get all orders (admin)
 // @route   GET /api/orders
 // @access  Private/Admin
-exports.getAllOrders = async (req, res) => {
+exports.getAllOrders = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 10 } = req.query;
     const query = {};
@@ -140,14 +140,14 @@ exports.getAllOrders = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in getAllOrders controller:', error.message);
-    res.status(500).json({ message: 'Server error fetching all orders' });
+    next(error);
   }
 };
 
 // @desc    Update order status (admin)
 // @route   PUT /api/orders/:id/status
 // @access  Private/Admin
-exports.updateOrderStatus = async (req, res) => {
+exports.updateOrderStatus = async (req, res, next) => {
   try {
     const { orderStatus, paymentStatus } = req.body;
 
@@ -210,6 +210,6 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(200).json({ message: 'Order updated successfully', order });
   } catch (error) {
     console.error('Error in updateOrderStatus controller:', error.message);
-    res.status(500).json({ message: 'Server error updating order status' });
+    next(error);
   }
 };

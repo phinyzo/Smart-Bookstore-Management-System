@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, Link as RouterLink } from "react-router-dom"
 import { logout } from "../../features/auth/authSlice"
-import { selectCartCount } from "../../features/cart/cartSlice"
+import { clearCart, selectCartCount } from "../../features/cart/cartSlice"
 import {
   AppBar, Toolbar, Typography, Button,
-  IconButton, Badge, Box, Chip
+  IconButton, Badge, Box, Chip, Tooltip
 } from "@mui/material"
 import {
   ShoppingCart, MenuBook, Logout,
-  Dashboard, LibraryBooks, Person
+  Dashboard, LibraryBooks, Person, VpnKey
 } from "@mui/icons-material"
 
 const Navbar = () => {
@@ -19,6 +19,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+    dispatch(clearCart())
     navigate("/login")
   }
 
@@ -68,6 +69,19 @@ const Navbar = () => {
             >
               Admin
             </Button>
+          )}
+
+          {token && (
+            <Tooltip title="License & Subscription">
+              <IconButton
+                color="inherit"
+                onClick={() => navigate("/license")}
+                size="small"
+                sx={{ color: "#9FE1CB" }}
+              >
+                <VpnKey fontSize="small" />
+              </IconButton>
+            </Tooltip>
           )}
 
           {token ? (

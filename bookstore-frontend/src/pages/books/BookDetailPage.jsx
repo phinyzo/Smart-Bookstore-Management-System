@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchBookById, clearBook } from "../../features/books/bookSlice"
 import { addToCart } from "../../features/cart/cartSlice"
+import { formatKES } from "../../utils/formatPrice"
 import { toast } from "react-toastify"
 import {
   Box, Typography, Button, Chip,
@@ -150,7 +151,7 @@ const BookDetailPage = () => {
                 </Typography>
                 <Typography variant="h6" fontWeight="800"
                   color="#1D9E75">
-                  ₹{book.price}
+                  {formatKES(book.price)}
                 </Typography>
               </Paper>
 
@@ -253,7 +254,7 @@ const BookDetailPage = () => {
               }}>
                 <Typography variant="h3"
                   color="success.main" fontWeight="800">
-                  ₹{book.price}
+                  {formatKES(book.price)}
                 </Typography>
                 <Chip
                   label={book.stock > 0
@@ -341,7 +342,7 @@ const BookDetailPage = () => {
                   },
                   {
                     label: "Price",
-                    value: `₹${book.price}`
+                    value: formatKES(book.price)
                   },
                   {
                     label: "Availability",
