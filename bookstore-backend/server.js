@@ -42,8 +42,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Handle preflight for all routes explicitly
-app.options('*', cors(corsOptions));
+// Handle preflight for all routes explicitly (Express 5 wildcard syntax)
+app.options('/{*path}', cors(corsOptions));
 
 // ── SECURITY HEADERS ─────────────────────────────────────────
 app.use(helmet({
