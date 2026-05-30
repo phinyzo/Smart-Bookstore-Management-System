@@ -23,6 +23,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:4173',
+  'https://phintech-bookstore.vercel.app',   // production frontend
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
@@ -31,8 +32,8 @@ const corsOptions = {
     // Allow no-origin requests (Postman, curl, mobile apps)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
-    // In production allow all origins as fallback (Vercel preview URLs etc.)
-    if (process.env.NODE_ENV === 'production') return callback(null, true);
+    // Allow any Vercel preview deployment for this project
+    if (origin.endsWith('.vercel.app')) return callback(null, true);
     callback(new Error(`CORS: Origin ${origin} not allowed`));
   },
   credentials:    true,

@@ -7,3 +7,4 @@ Bookstore_Management_System.pptx
 *.mp4
 *.zip
 .vercel
+.env*.local

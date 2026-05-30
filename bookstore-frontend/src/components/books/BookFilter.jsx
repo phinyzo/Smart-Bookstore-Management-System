@@ -88,16 +88,16 @@ const BookFilter = ({ selectedGenre, onGenreChange,
               min={0}
               max={2000}
               step={50}
-              valueLabelFormat={(val) => `₹${val}`}
+              valueLabelFormat={(val) => `KSH${val}`}
               color="primary"
             />
             <Box sx={{ display: "flex",
               justifyContent: "space-between", mt: 0.5 }}>
               <Typography variant="caption" color="text.secondary">
-                ₹{priceRange[0]}
+                KSH{priceRange[0]}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                ₹{priceRange[1]}
+                KSH{priceRange[1]}
               </Typography>
             </Box>
           </Box>
